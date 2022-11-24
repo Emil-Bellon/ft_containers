@@ -27,13 +27,13 @@ namespace ft
 
 			/* Element Access */
 
-			reference		top()	{ return c.back(); }
-			const_reference	top() const	{ return c.back(); }
+			reference		top()			{ return c.back(); }
+			const_reference	top()	const	{ return c.back(); }
 
 			/* Capacity */
 
-			bool		empty() const	{ return c.empty(); }
-			size_type	size() const	{ return c.size(); }
+			bool		empty()	const	{ return c.empty(); }
+			size_type	size()	const	{ return c.size(); }
 
 			/* Modifiers */
 
@@ -66,7 +66,7 @@ namespace ft
 	template <typename T, typename Container>
 	inline bool	operator<=(const stack<T, Container> & lhs, const stack<T, Container> & rhs)	{ return lhs.c <= rhs.c; }
 	template <typename T, typename Container>
-	inline bool	operator>(const stack<T, Container> & lhs, const stack<T, Container> & rhs)	{ return lhs.c > rhs.c; }
+	inline bool	operator>(const stack<T, Container> & lhs, const stack<T, Container> & rhs)		{ return lhs.c > rhs.c; }
 	template <typename T, typename Container>
-	inline bool	operator<(const stack<T, Container> & lhs, const stack<T, Container> & rhs)	{ return lhs.c < rhs.c; }
+	inline bool	operator<(const stack<T, Container> & lhs, const stack<T, Container> & rhs)		{ return lhs.c < rhs.c; }
 }

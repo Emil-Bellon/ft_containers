@@ -44,8 +44,8 @@ namespace ft
 
 		public :
 
-			explicit	vector(const allocator_type & alloc = allocator_type()) : _data(NULL), _size(0), _capacity(0)	{};
-			explicit	vector(size_type size, const value_type & value = value_type(), const allocator_type& alloc = allocator_type()) : _size(size), _capacity(size)
+			explicit	vector() : _data(NULL), _size(0), _capacity(0)	{};
+			explicit	vector(size_type size, const value_type & value = value_type()) : _size(size), _capacity(size)
 			{
 				_data = _alloc.allocate(_capacity);
 				for (size_type i = 0; i < size; i++)
@@ -79,6 +79,99 @@ namespace ft
 					_alloc.deallocate(_data, _capacity);
 			};
 
+			vector<T> & operator=(const vector<T>& rhs)
+			{
+				if (this != &rhs)
+				{
+					clear();
+					if (_capacity)
+						_alloc.deallocate(_data, _capacity);
+					_size = rhs._size;
+					_alloc = rhs._alloc;
+					_capacity = rhs._capacity;
+					if (_capacity)
+					{
+						_data = _alloc.allocate(_capacity);
+						for (size_type i = 0; i < _size; i++)
+							_alloc.construct(&_data[i], rhs._data[i]);
+					}
+				}
+				return *this;
+			};
+
+			/* Iterator */
+
+			iterator				begin()				{ return iterator(_data); }
+			const_iterator			begin()		const	{ return const_iterator(_data); }
+			iterator				end()				{ return iterator(_data + _size); }
+			const_iterator			end()		const	{ return const_iterator(_data + _size); }
+			reverse_iterator		rbegin()			{ return reverse_iterator(end()); }
+			const_reverse_iterator	rbegin() 	const	{ return const_reverse_iterator(end()); }
+			reverse_iterator		rend()				{ return reverse_iterator(begin()); }
+			const_reverse_iterator	rend() 		const	{ return const_reverse_iterator(begin()); }
+
+			/* Capacity */
+
+			size_type	size()		const	{ return _size; }
+			size_type	max_size()	const	{ return _alloc.max_size(); }
+			size_type	capacity()	const	{ return _capacity; }
+			bool		empty()		const	{ return _size ? false : true; }
+			void		resize(size_type n, value_type val = value_type())
+			{
+				if (n > _capacity)
+					reserve(_adjust_capacity(n));
+				if (n < _size)
+				{
+					for (size_type i = n; i < _size; ++i)
+						_alloc.destroy(&_data[i]);
+					_size = n;
+				}
+				else if (n > _size)
+				{
+					for (size_type i = _size; i < n; ++i)
+						_alloc.construct(&_data[i], val);
+					_size = n;
+				}
+			}
+			void		reserve(size_type n)
+			{
+				if (n > max_size())
+					throw(std::length_error("vector::reserve: max_size exceeded"));
+				if (n > _capacity)
+				{
+					pointer newData = _alloc.allocate(n);
+					for (size_type i = 0; i < _size; ++i)
+						_alloc.construct(newData + i, _data[i]);
+					_destroy_array();
+					if (_capacity)
+						_alloc.deallocate(_data, _capacity);
+					_data = newData;
+					_capacity = n;
+				}
+			}
+
+			/* Element access */
+
+			value_type &	operator[](const size_t & i) const { return _data[i]; }
+			reference		front()			{ return _data[0]; }
+			const_reference	front()	const	{ return _data[0]; }
+			reference		back()			{ return _data[_size - 1]; }
+			const_reference	back()	const	{ return _data[_size - 1]; }
+			pointer			data()			{ return _data; }
+			const_pointer	data()	const	{ return _data; }
+			reference		at(size_type n)
+			{
+				if (n >= _size)
+					throw std::out_of_range("ft::vector::at");
+				return _data[n];
+			}
+			const_reference	at(size_type n)	const
+			{
+				if (n >= _size)
+					throw std::out_of_range("ft::vector::at");
+				return _data[n];
+			}
+
 			/* Modifiers */
 
 			void	clear()
@@ -89,5 +182,9 @@ namespace ft
 					_size = 0;
 				}
 			}
+
+			/* Alloctor */
+
+			allocator_type get_allocator()	const	{ return _alloc; }
 	};
 }
