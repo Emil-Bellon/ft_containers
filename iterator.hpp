@@ -19,7 +19,7 @@ namespace ft
 
 		protected :
 
-			T _ptr;
+			T	_ptr;
 
 		public :
 
@@ -38,12 +38,12 @@ namespace ft
 			iterator &	operator++()							{ ++_ptr; return *this; }
 			iterator	operator++(int)							{ return iterator(_ptr++); }
 			iterator &	operator--()							{ --_ptr; return *this; }
-			iterator		operator--(int)							{ return iterator(_ptr--); }
+			iterator	operator--(int)							{ return iterator(_ptr--); }
 			iterator &	operator+=(difference_type n)			{ _ptr += n; return *this; }
 			iterator &	operator-=(difference_type n)			{ _ptr -= n; return *this; }
 			iterator	operator+(difference_type n)	const	{ return iterator(_ptr + n); }
 			iterator	operator-(difference_type n)	const	{ return iterator(_ptr - n); }
-
+			bool		operator!()						const	{ return !_ptr; }
 	};
 
 	template<class IteratorL, class IteratorR>

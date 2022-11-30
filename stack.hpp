@@ -1,10 +1,10 @@
 #pragma once
 
-#include <vector>
+#include "vector.hpp"
 
 namespace ft 
 {
-	template <class T, class Container = std::vector<T> > class stack
+	template <class T, class Container = ft::vector<T> > class stack
 	{
 		public :
 
@@ -55,7 +55,7 @@ namespace ft
 			friend inline bool		operator<(const stack<_T, ctnr> & lhs, const stack<_T, ctnr> & rhs);
 	};
 
-	/* Non member function (overloads) */
+	/* Non member function */
 
 	template <typename T, typename Container>
 	inline bool	operator==(const stack<T, Container> & lhs, const stack<T, Container> & rhs)	{ return lhs.c == rhs.c; }
