@@ -61,29 +61,31 @@ namespace ft
 	template <class InputIterator1, class InputIterator2>
 	bool lexicographical_compare(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2, InputIterator2 last2)
 	{
-		while (first1!=last1)
+		while (first1 != last1)
 		{
-			if (first2==last2 || *first2<*first1)
+			if (first2 == last2 || *first2 < *first1)
 				return false;
-			else if (*first1<*first2)
+			else if (*first1 < *first2)
 				return true;
-			++first1; ++first2;
+			++first1;
+			++first2;
 		}
-		return (first2!=last2);
+		return (first2 != last2);
 	}
 
 	template <class InputIterator1, class InputIterator2, class Compare>
 	bool lexicographical_compare(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2, InputIterator2 last2, Compare comp)
 	{
-		while (first1!=last1)
+		while (first1 != last1)
 		{
-			if (first2==last2 || comp(*first2,*first1))
+			if (first2 == last2 || comp(*first2, *first1))
 				return false;
-			else if (comp(*first1,*first2))
+			else if (comp(*first1, *first2))
 				return true;
-			++first1; ++first2;
+			++first1;
+			++first2;
 		}
-		return (first2!=last2);
+		return (first2 != last2);
 	}
 
 	/* pair */
@@ -94,16 +96,16 @@ namespace ft
 		T2 second;
 
 		pair()							: first(), second()					{}
-		pair(const T1& a, const T2& b)	: first(a), second(b)				{}
+		pair(const T1 & a, const T2 & b)	: first(a), second(b)				{}
 		template<class U1, class U2>
-		pair(const pair<U1, U2>& p)		: first(p.first), second(p.second)	{}
+		pair(const pair<U1, U2> & src)		: first(src.first), second(src.second)	{}
 
 		~pair() {}
 
-		pair& operator=(const pair& other)
+		pair & operator=(const pair & rhs)
 		{
-			first = other.first;
-			second = other.second;
+			first = rhs.first;
+			second = rhs.second;
 			return *this;
 		}
 	};
@@ -123,5 +125,5 @@ namespace ft
 
 	/* make_pair */
 	template<class T1, class T2>
-	pair<T1, T2> make_pair(const T1& a, const T2& b)				{ return pair<T1, T2>(a, b); }
+	pair<T1, T2> make_pair(const T1 & a, const T2 & b)				{ return pair<T1, T2>(a, b); }
 }

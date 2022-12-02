@@ -301,12 +301,8 @@ namespace ft
 			void insert(iterator pos, InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, void *>::type = NULL)
 			{
 				size_type count = 0;
-				InputIterator first_cpy = first;
-				while (first_cpy != last)
-				{
-					first_cpy++;
+				for (InputIterator it = first; it != last; it++)
 					count++;
-				}
 				if (_size + count > _capacity)
 				{
 					size_type posIndex = pos - begin();

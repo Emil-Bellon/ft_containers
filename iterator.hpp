@@ -82,7 +82,7 @@ namespace ft
 			typedef typename	iterator_traits<T>::pointer				pointer;
 			typedef typename	iterator_traits<T>::reference			reference;
 			typedef typename	iterator_traits<T>::iterator_category	iterator_category;
-			typedef				reverse_iterator							iterator;
+			typedef				reverse_iterator						iterator;
 
 		protected :
 
