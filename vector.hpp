@@ -54,9 +54,10 @@ namespace ft
 			}
 			template< class InputIterator >
  			vector(InputIterator first, InputIterator last, const allocator_type & alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value, void *>::type = NULL) : _data(NULL), _size(0), _capacity(0), _alloc(alloc)
-				{ assign(first, last); }
+			{ assign(first, last); }
 			vector(const vector<T>& src) : _data(NULL), _size(0), _capacity(0), _alloc(src._alloc)
-				{ assign(src.begin(), src.end()); }
+			{ assign(src.begin(), src.end()); }
+
 			~vector()
 			{
 				clear();
@@ -177,11 +178,9 @@ namespace ft
 			template<class InputIterator>
 			void assign(InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, void *>::type = NULL)
 			{
-
 				size_type count = 0;
 				for (InputIterator it = first; it != last; it++)
 					count++;
-
 				if (count > _capacity)
 				{
 					if (count > max_size())
@@ -261,15 +260,18 @@ namespace ft
 			}
 			void insert(iterator pos, size_type count, const value_type& val)
 			{
-				if (_size + count > _capacity) {
+				if (_size + count > _capacity)
+				{
 					size_type posIndex = pos - begin();
 					pointer newData = _alloc.allocate(_adjust_capacity(_size + count));
 					size_type newCapacity = _adjust_capacity(_size + count);
-					for (size_type i = 0; i < count; ++i) {
+					for (size_type i = 0; i < count; ++i)
+					{
 						_alloc.construct(newData + posIndex + i, val);
 					}
 					size_t j = 0;
-					for (size_type i = 0; i < _size + count; ++i) {
+					for (size_type i = 0; i < _size + count; ++i)
+					{
 						if (i >= posIndex && i < posIndex + count)
 							continue;
 						_alloc.construct(newData + i, _data[j]);
@@ -282,14 +284,15 @@ namespace ft
 					_size += count;
 					return;
 				}
-
-				for (iterator it = end() + count -1; it != pos + count -1; --it) {
+				for (iterator it = end() + count -1; it != pos + count -1; --it)
+				{
 						if (it >= end())
 							_alloc.construct(it.base(), *(it - count));
 						else
 							*it = *(it - count);
 				}
-				for (iterator it = pos; it != pos + count; ++it) {
+				for (iterator it = pos; it != pos + count; ++it)
+				{
 					if (it >= end())
 						_alloc.construct(it.base(), val);
 					else
