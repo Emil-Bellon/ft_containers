@@ -5,7 +5,17 @@
 
 namespace ft
 {
-	template <typename T>
+	template< class Category, class T, class Distance = ptrdiff_t, class Pointer = T*, class Reference = T& >
+	struct map_iterator
+	{
+		typedef T					value_type;
+		typedef Distance			difference_type;
+		typedef Category			iterator_category;
+		typedef Pointer				pointer;
+		typedef Reference			reference;
+	};
+
+	template<typename T>
 	class random_access_iterator
 	{
 		public :
@@ -100,7 +110,7 @@ namespace ft
 			T base()	const	{ return _ptr; }
 
 			reference	operator*()						const	{ T tmp = _ptr; return *--tmp; }
-			pointer		operator->()					const	{ T tmp = _ptr; return &*--tmp; }
+			pointer		operator->()					const	{ return &(operator*()); }
 			reference	operator[](difference_type n)	const	{ return _ptr[-n - 1]; }
 			iterator &	operator++()							{ --_ptr; return *this; }
 			iterator	operator++(int)							{ return reverse_iterator(_ptr--); }

@@ -126,4 +126,43 @@ namespace ft
 	/* make_pair */
 	template<class T1, class T2>
 	pair<T1, T2> make_pair(const T1 & a, const T2 & b)				{ return pair<T1, T2>(a, b); }
+
+	/* min max */
+	template<class T>
+	const T& max(const T& a, const T& b)
+	{ return (a < b) ? b : a; }
+
+	template<class T, class Compare>
+	const T& max(const T& a, const T& b, Compare comp)
+	{ return (comp()(a, b)) ? b : a; }
+
+	template<class T>
+	const T& min(const T& a, const T& b)
+	{ return (b < a) ? b : a; }
+
+	template<class T, class Compare>
+	const T& min(const T& a, const T& b, Compare comp)
+	{ return (comp()(b, a)) ? b : a; }
+
+	/* less */
+	template<class T>
+	struct less
+	{
+		typedef bool	result_type;
+		typedef T		first_argument_type;
+		typedef T		second_argument_type;
+
+		bool operator()(const T &lhs, const T &rhs) const
+		{ return lhs < rhs; }
+	};
+
+	/* swap */
+
+	template<class T>
+	void swap(T& a, T& b)
+	{
+		T tmp = a;
+		a = b;
+		b = tmp;
+	}
 }
