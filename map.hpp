@@ -3,6 +3,7 @@
 #include "utils.hpp"
 #include "iterator.hpp"
 #include "avl_tree.hpp"
+#include "vector.hpp"
 #include <sstream>
 #include <memory>
 #include <iostream>
@@ -148,11 +149,13 @@ namespace ft
 
 			void erase(iterator first, iterator last)
 			{
-				while (first != iterator(this->_tree.root(), last.current_node()))
-				{
-					iterator next = first + 1;
-					first = iterator(this->_tree.root(), next.current_node());
-				}
+				if (first == begin() && last == end())
+					clear();
+				ft::vector<iterator> erase_vec;
+				for (iterator map_it = first; map_it != last; ++map_it)
+					erase_vec.push_back(map_it);
+				for (typename ft::vector<iterator>::iterator it = erase_vec.end() - 1; it != erase_vec.begin() - 1; --it)
+					erase(*it);
 			}
 			
 			size_type erase(const Key& key)
